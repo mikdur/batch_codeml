@@ -1,0 +1,46 @@
+common:
+  # File with single copy orthologs
+  homology_file: single_copy.tsv
+  # Path to MACSE jar
+  macse: macse_v2.04.jar
+  # Path to folder where to store intermediate
+  # data
+  data_dir: codeml_data
+  # Chunk size while processing.
+  chunk_size: 1
+  # Fasta files with CDS/transcripts
+  # Must be in same order as gene IDs appear
+  # in the homology file
+  fasta_files:
+    - transcripts/genome1.fasta
+    - transcripts/genome2.fasta
+    - transcripts/genome3.fasta
+    - transcripts/genome4.fasta
+
+# Job descriptions
+# These are the codeml runs to run
+# for each homology set in the 
+# homology file
+jobs:
+  # Each key the dict is the name of the model.
+  # At least one job must be defined.
+  model_name: 
+    # Newick tree where sequences are named seq1 seq2 seq3
+    # according to order of fasta-files. Refer
+    # to PAML documentation on how to label
+    # branches when running branch ratio tests
+    tree: model_tree.tre
+    # CODEML config file for this model
+    ctl: codeml_control.ctl
+    # Which results to export to final result table.
+    # subbports globbing patters. All available parameters
+    # can be exported with the -l flag
+    export: 
+      - NSsites/0/parameters/omega
+      - NSsites/0/lnL
+      - NSsites/1/lnL
+      - NSsites/2/lnL
+      - NSsites/7/lnL
+      - NSsites/8/lnL
+      - NSsites/?/parameters/site classes/?/*
+      
